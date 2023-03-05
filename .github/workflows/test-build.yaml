@@ -22,6 +22,6 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: ${{ matrix.image }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-          scope: ${{ github.ref_name }}-${{ matrix.image }}
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.image }}
+
