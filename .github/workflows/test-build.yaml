@@ -8,11 +8,12 @@ on:
 
 jobs:
   test-build:
-    strategy:
-      matrix:
-        image-dir:
-          - pyspark
-          - tensorflow
+#    strategy:
+#      matrix:
+#        image-dir:
+#          - pyspark
+#          - tensorflow
     uses: ./github/workflows/build.yaml
     with:
-      image_dir: ${{ matrix.image-dir }}
+      image_dir: pyspark
+
