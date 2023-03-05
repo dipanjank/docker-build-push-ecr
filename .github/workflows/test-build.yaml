@@ -30,5 +30,4 @@ jobs:
           push: false
           cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.image }}
           cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.image }}
-          tags:
-            - ${{ steps.get-dir-hash.outputs.hash }}
+          tags: ${{ matrix.image }}:${{ steps.get-dir-hash.outputs.hash }}
