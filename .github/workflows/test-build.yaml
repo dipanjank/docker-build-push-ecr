@@ -24,3 +24,4 @@ jobs:
           context: ${{ matrix.image }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+          scope: ${{ github.ref_name }}-${{ matrix.image }}
