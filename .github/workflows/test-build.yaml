@@ -15,9 +15,9 @@ jobs:
           - tensorflow
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
       - uses: docker/setup-buildx-action@v2
       - name: Build Image
-        run: docker buildx build .
-        working-directory: ${{ matrix.image }}
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.image }}
+          tags: $$ {github.sha }}
