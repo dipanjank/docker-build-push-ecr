@@ -10,9 +10,13 @@ jobs:
   test-build:
     strategy:
       matrix:
-        image-dir:
+        image:
           - pyspark
           - tensorflow
-    uses: .github/workflows/build.yaml
-    with:
-      image_dir: ${{ matrix.image-dir }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v2
+      - name: Build Image
+        run: docker buildx build
+        working_directory: ${{ matrix.image }}
