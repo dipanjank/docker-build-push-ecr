@@ -10,9 +10,24 @@ jobs:
   test-build:
     strategy:
       matrix:
-        image-dir:
+        image:
           - pyspark
           - tensorflow
-    uses: ./github/workflows/build.yaml
-    with:
-      image_dir: ${{ matrix.image-dir }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - uses: docker/setup-buildx-action@v2
+      - name: Hash Current Directory
+        id: get-dir-hash
+        uses: theowenyoung/folder-hash@v3
+        with:
+          path: ${{ matrix.image }}
+      - name: Build Image
+        uses: docker/build-push-action@v4
+        with:
+          context: ${{ matrix.image }}
+          push: false
+          cache-from: type=gha,scope=${{ github.ref_name }}-${{ matrix.image }}
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-${{ matrix.image }}
+          tags: ${{ matrix.image }}:${{ steps.get-dir-hash.outputs.hash }}
